@@ -11,6 +11,4 @@ public class HoustonApplication {
         SpringApplication.run(HoustonApplication.class, args);
     }
 
-
-
 }

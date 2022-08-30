@@ -1,0 +1,184 @@
+SET MODE PostgreSQL
+
+-- CREATE TABLE "countries" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "continent" varchar NOT NULL,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "categories" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "techDocs" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "file" varchar NOT NULL,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "sourceCode" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "url" varchar,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "socialProfiles" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "url" varchar,
+--   "username" varchar NOT NULL,
+--   "socialNetwork" varchar NOT NULL,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "platform" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "symbol" varchar NOT NULL,
+--   "tokenAddress" varchar NOT NULL,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "explorers" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "url" varchar NOT NULL,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "tags" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "websites" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "url" varchar,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "brokers" (
+--   "id" uuid PRIMARY KEY,
+--   "name" varchar NOT NULL,
+--   "description" varchar,
+--   "slug" varchar,
+--   "logo" varchar,
+--   "dateLaunched" TIMESTAMP WITH TIME ZONE,
+--   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--   "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- CREATE TABLE "coins" (
+--     "id" uuid PRIMARY KEY,
+--     "name" varchar NOT NULL,
+--     "description" varchar NOT NULL,
+--     "isActive" boolean NOT NULL,
+--     "isFiat" boolean NOT NULL,
+--     "logo" varchar,
+--     "symbol" varchar NOT NULL,
+--     "firstHistoricalData" TIMESTAMP WITH TIME ZONE,
+--     "lastHistoricalData" TIMESTAMP WITH TIME ZONE,
+--     "country" uuid,
+--     "category" uuid,
+--     "techDoc" uuid,
+--     "sourceCode" uuid,
+--     "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+--
+-- ALTER TABLE "coins" ADD CONSTRAINT "fk_countries_coins" FOREIGN KEY ("country") REFERENCES "countries"("id");
+-- ALTER TABLE "coins" ADD CONSTRAINT "fk_categories_coins" FOREIGN KEY ("category") REFERENCES "categories"("id");
+-- ALTER TABLE "coins" ADD CONSTRAINT "fk_techDocs_coins" FOREIGN KEY ("techDoc") REFERENCES "techDocs"("id");
+-- ALTER TABLE "coins" ADD CONSTRAINT "fk_sourceCode_coins" FOREIGN KEY ("sourceCode") REFERENCES "sourceCode"("id");
+--
+--
+--
+-- CREATE TABLE  "socialProfilesCoins"(
+--     "id" uuid PRIMARY KEY,
+--     "socialProfile" uuid NOT NULL,
+--     "coin" uuid references "coins"("id") NOT NULL,
+--     "dateLaunched" TIMESTAMP WITH TIME ZONE,
+--     "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- ALTER TABLE "socialProfilesCoins" ADD CONSTRAINT "fk_socialProfile_socialProfileCoins" FOREIGN KEY ("socialProfile") REFERENCES "socialProfiles"("id");
+-- ALTER TABLE "socialProfilesCoins" ADD CONSTRAINT "fk_coin_socialProfileCoins" FOREIGN KEY ("coin") REFERENCES "coins"("id");
+--
+-- CREATE TABLE "brokerCoins" (
+--     "id" uuid PRIMARY KEY,
+--     "broker" uuid NOT NULL,
+--     "coin" uuid NOT NULL,
+--     "dateLaunched" TIMESTAMP WITH TIME ZONE,
+--     "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- ALTER TABLE "brokerCoins" ADD CONSTRAINT "fk_broker_brokerCoins" FOREIGN KEY ("broker") REFERENCES "brokers"("id");
+-- ALTER TABLE "brokerCoins" ADD CONSTRAINT "fk_coin_brokerCoins" FOREIGN KEY ("coin") REFERENCES "coins"("id");
+--
+-- CREATE TABLE "swapCoins" (
+--     "id" uuid PRIMARY KEY,
+--     "slug" varchar NOT NULL,
+--     "isActive" boolean NOT NULL,
+--     "from" uuid NOT NULL,
+--     "to" uuid NOT NULL,
+--     "dateLaunched" TIMESTAMP WITH TIME ZONE,
+--     "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- ALTER TABLE "swapCoins" ADD CONSTRAINT "fk_from_swapCoins" FOREIGN KEY ("from") REFERENCES "coins"("id");
+-- ALTER TABLE "swapCoins" ADD CONSTRAINT "fk_to_swapCoins" FOREIGN KEY ("to") REFERENCES "coins"("id");
+--
+-- CREATE TABLE "brokerSwaps" (
+--     "id" uuid PRIMARY KEY,
+--     "broker" uuid NOT NULL,
+--     "swap" uuid NOT NULL,
+--     "dateLaunched" TIMESTAMP WITH TIME ZONE,
+--     "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+--     "deletedAt" TIMESTAMP WITH TIME ZONE
+-- );
+--
+-- ALTER TABLE "brokerSwaps" ADD CONSTRAINT "fk_broker_brokerSwaps" FOREIGN KEY ("broker") REFERENCES "brokers"("id");
+-- ALTER TABLE "brokerSwaps" ADD CONSTRAINT "fk_swap_brokerSwaps" FOREIGN KEY ("swap") REFERENCES "swapCoins"("id");
